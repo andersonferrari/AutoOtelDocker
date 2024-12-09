@@ -4,6 +4,28 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
+      - CORECLR_ENABLE_PROFILING=1
+      - ASPNETCORE_HOSTINGSTARTUPASSEMBLIES=OpenTelemetry.AutoInstrumentation.AspNetCoreBootstrapper
+      - CORECLR_PROFILER={918728DD-259F-4A6A-AC2B-B85E1B658318}
+      - CORECLR_PROFILER_PATH=/otel-ai/linux-x64/OpenTelemetry.AutoInstrumentation.Native.so
+      - DOTNET_STARTUP_HOOKS=/otel-ai/net/OpenTelemetry.AutoInstrumentation.StartupHook.dll
+      - OTEL_DOTNET_AUTO_HOME=/otel-ai # TODO: try to copy with the instrument.sh script
+      - DOTNET_ADDITIONAL_DEPS=/otel-ai/AdditionalDeps
+      - DOTNET_SHARED_STORE=/otel-ai/store
+      #- OTEL_DOTNET_AUTO_INTEGRATIONS_FILE=
+      - OTEL_DOTNET_AUTO_INSTRUMENTATION_ENABLED=true
+      - OTEL_DOTNET_AUTO_TRACES_ENABLED=true
+      - OTEL_DOTNET_AUTO_TRACES_ASPNETCORE_INSTRUMENTATION_ENABLED=true
+      # - OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
+      - OTEL_TRACES_EXPORTER=console,otlp
+      - OTEL_DOTNET_AUTOLOAD_ENABLED=true
+      - OTEL_SERVICE_NAME=MyAspNetCoreApp
+      - OTEL_DOTNET_AUTO_LOG_LEVEL=trace
+      - OTEL_DOTNET_AUTO_LOGGER=console
+      - OTEL_LOG_LEVEL=debug
+      - OTEL_DOTNET_AUTO_LOG_DIRECTORY=/opt
+      - OTEL_DOTNET_AUTO_FAIL_FAST_ENABLED=true #TODO: just for debug, remove before prod
+
     ports:
       - "8080"
       - "8081"

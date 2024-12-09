@@ -10,16 +10,19 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddOpenTelemetry()
-    .ConfigureResource( r => 
-        r.AddService("servicename", "1.0"))
-    .WithTracing( t => t //SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AppTraceResource", "1.0"))
-        //.AddAspNetCoreInstrumentation()
-        .AddHttpClientInstrumentation()
-        .SetSampler(new AlwaysOnSampler())
-        //.AddConsoleExporter()
-        //.AddOtlpExporter()
-    );
+//builder.Services.AddOpenTelemetry()
+//    .ConfigureResource(r =>
+//        r.AddService("servicename", "1.0"))
+//    .WithLogging()
+//    .WithMetrics()
+//    .WithTracing();
+// t => t //SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AppTraceResource", "1.0"))
+//.AddAspNetCoreInstrumentation()
+//.AddHttpClientInstrumentation()
+//.SetSampler(new AlwaysOnSampler())
+//.AddConsoleExporter()
+//.AddOtlpExporter()
+//);
 
 var app = builder.Build();
 
