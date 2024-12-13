@@ -1,5 +1,8 @@
+using OpenTelemetry.Exporter;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using System.Reflection.PortableExecutable;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +15,28 @@ builder.Services.AddSwaggerGen();
 
 //builder.Services.AddOpenTelemetry()
 //    .ConfigureResource(r =>
-//        r.AddService("servicename", "1.0"))
-//    .WithLogging()
+//        r.AddService("servicename", "1.0"));
+
+builder.Services.AddOpenTelemetry()
+    .WithTracing(t =>
+    {
+        t.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("MyAppTraceResouce2"));
+        if (builder.Environment.IsDevelopment())
+        {
+            t.AddConsoleExporter();
+            //other dev defaults
+        }
+        t.AddOtlpExporter();
+
+        t.AddAspNetCoreInstrumentation();
+    });
+
+builder.Services.AddOpenTelemetry()
+    .WithLogging(l =>
+    {
+        //l.AddConsoleExporter();
+        //l.AddOtlpExporter();
+    });
 //    .WithMetrics()
 //    .WithTracing();
 // t => t //SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AppTraceResource", "1.0"))
@@ -23,6 +46,10 @@ builder.Services.AddSwaggerGen();
 //.AddConsoleExporter()
 //.AddOtlpExporter()
 //);
+
+//TODO: Test!!
+//builder.Services.Configure<OtlpExporterOptions>(
+//    builder.Configuration.GetSection("OpenTelemetry:Otlp"));
 
 var app = builder.Build();
 

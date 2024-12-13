@@ -16,25 +16,33 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "CORECLR_ENABLE_PROFILING": "1",
-        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "OpenTelemetry.AutoInstrumentation.AspNetCoreBootstrapper",
-        "CORECLR_PROFILER": "{918728DD-259F-4A6A-AC2B-B85E1B658318}",
-        "CORECLR_PROFILER_PATH": "c:\\Users\\ander\\source\\repos\\AutoOtelDocker\\webapidocker\\publish\\OpenTelemetry.AutoInstrumentation.Native.dll",
-        "DOTNET_STARTUP_HOOKS": "c:\\Users\\ander\\source\\repos\\AutoOtelDocker\\webapidocker\\publish\\OpenTelemetry.AutoInstrumentation.StartupHook.dll",
-        "OTEL_DOTNET_AUTO_HOME": "c:\\Users\\ander\\source\\repos\\AutoOtelDocker\\webapidocker\\publish",
-        "OTEL_DOTNET_AUTO_INSTRUMENTATION_ENABLED": "true",
-        "OTEL_DOTNET_AUTO_TRACES_ENABLED": "true",
-        "OTEL_DOTNET_AUTO_TRACES_ASPNETCORE_INSTRUMENTATION_ENABLED": "true",
-        //"OTEL_EXPORTER_OTLP_ENDPOINT": "http://localhost:4318",  //this is the defaul http port that is opened in aspire-dashboard
-        "OTEL_TRACES_EXPORTER": "console,otlp",
-        "OTEL_METRICS_EXPORTER": "console,otlp",
-        "OTEL_LOGS_EXPORTER": "console,otlp",
-        "OTEL_DOTNET_AUTOLOAD_ENABLED": "true",
-        "OTEL_SERVICE_NAME": "MyAspNetCoreApp",
-        "OTEL_DOTNET_AUTO_LOG_LEVEL": "trace",
-        "OTEL_LOG_LEVEL": "debug",
-        "OTEL_DOTNET_AUTO_LOGGER": "console",
-        "OTEL_DOTNET_AUTO_FAIL_FAST_ENABLED":"true"
+        // these are used by auto-instrumentation: https://opentelemetry.io/docs/zero-code/net/configuration/
+        //"CORECLR_ENABLE_PROFILING": "1",
+        //"ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "OpenTelemetry.AutoInstrumentation.AspNetCoreBootstrapper",
+        //"CORECLR_PROFILER": "{918728DD-259F-4A6A-AC2B-B85E1B658318}",
+        //"CORECLR_PROFILER_PATH": "c:\\Users\\ander\\source\\repos\\AutoOtelDocker\\webapidocker\\publish\\OpenTelemetry.AutoInstrumentation.Native.dll",
+        //"DOTNET_STARTUP_HOOKS": "c:\\Users\\ander\\source\\repos\\AutoOtelDocker\\webapidocker\\publish\\OpenTelemetry.AutoInstrumentation.StartupHook.dll",
+        //"OTEL_DOTNET_AUTO_HOME": "c:\\Users\\ander\\source\\repos\\AutoOtelDocker\\webapidocker\\publish",
+        //"OTEL_DOTNET_AUTO_INSTRUMENTATION_ENABLED": "true",
+        //"OTEL_DOTNET_AUTO_TRACES_ENABLED": "true",
+        //"OTEL_DOTNET_AUTO_TRACES_ASPNETCORE_INSTRUMENTATION_ENABLED": "true",
+        //"OTEL_DOTNET_AUTOLOAD_ENABLED": "true",
+        //"OTEL_LOG_LEVEL": "debug",
+        //"OTEL_DOTNET_AUTO_LOG_LEVEL": "trace",
+        //"OTEL_DOTNET_AUTO_LOGGER": "console",
+        //"OTEL_DOTNET_AUTO_FAIL_FAST_ENABLED": "true",
+
+        // these are the OTEL variables with can use with code-based implementation: https://opentelemetry.io/docs/languages/sdk-configuration/general/
+        "OTEL_SERVICE_NAME": "NameFromLaunchSettings",
+        "OTEL_RESOURCE_ATTRIBUTES": "deployment.environment=development",
+        "OTEL_TRACES_SAMPLER": "traceidratio",
+        "OTEL_TRACES_SAMPLER_ARG": "1.0", //100%
+        // this is the default "OTEL_PROPAGATORS": "tracecontext,baggage", 
+        // The OTEL_{0}_EXPOTER vars don't seem to work with code-based OTEL implementation
+        //"OTEL_TRACES_EXPORTER": "console",
+        //"OTEL_METRICS_EXPORTER": "console",
+        //"OTEL_LOGS_EXPORTER": "console"
+        //"OTEL_EXPORTER_OTLP_ENDPOINT": "http://localhost:4318", // More export vars: https://opentelemetry.io/docs/languages/sdk-configuration/otlp-exporter/
 
       },
       "dotnetRunMessages": true,
