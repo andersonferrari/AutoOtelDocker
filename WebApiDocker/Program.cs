@@ -26,16 +26,16 @@ builder.Services.AddOpenTelemetry()
             t.AddConsoleExporter();
             //other dev defaults
         }
-        t.AddOtlpExporter();
-
         t.AddAspNetCoreInstrumentation();
+        t.AddOtlpExporter();
+        
     });
 
 builder.Services.AddOpenTelemetry()
     .WithLogging(l =>
     {
-        //l.AddConsoleExporter();
-        //l.AddOtlpExporter();
+        l.AddConsoleExporter();
+        l.AddOtlpExporter();
     });
 //    .WithMetrics()
 //    .WithTracing();
